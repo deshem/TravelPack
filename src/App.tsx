@@ -10,8 +10,12 @@ declare global {
   interface Window {
     Telegram?: {
       WebApp?: {
-        initDataUnsafe?: { user?: { id?: number } };
+        initDataUnsafe?: { user?: { id?: number; first_name?: string } };
         ready?: () => void;
+        expand?: () => void;
+        setHeaderColor?: (color: string) => void;
+        setBackgroundColor?: (color: string) => void;
+        themeParams?: { bg_color?: string; header_bg_color?: string };
       };
     };
   }
@@ -24,8 +28,17 @@ export default function App() {
   const setTelegramUserId = useAppStore((state) => state.setTelegramUserId);
 
   useEffect(() => {
-    window.Telegram?.WebApp?.ready?.();
-    const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+    const tg = window.Telegram?.WebApp;
+    tg?.ready?.();
+    tg?.expand?.();
+    const tp = tg?.themeParams;
+    if (tp?.header_bg_color) {
+      tg?.setHeaderColor?.(tp.header_bg_color);
+    }
+    if (tp?.bg_color) {
+      tg?.setBackgroundColor?.(tp.bg_color);
+    }
+    const telegramId = tg?.initDataUnsafe?.user?.id;
     setTelegramUserId(String(telegramId ?? "local-dev-user"));
   }, [setTelegramUserId]);
 

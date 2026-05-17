@@ -13,5 +13,5 @@
     "skipLibCheck": true,
     "baseUrl": "."
   },
-  "include": ["src", "backend", "vite.config.ts"]
+  "include": ["src", "backend", "api", "vite.config.ts"]
 }
