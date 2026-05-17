@@ -1,16 +1,35 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createTrip, listTrips } from "../../backend/controllers/tripController";
-import { adaptReq, adaptRes } from "../../backend/vercelShim";
+import { tripStore } from "../../backend/models/tripStore";
+import type { TripInput } from "../../backend/types";
 
-export default function handler(vercelReq: VercelRequest, vercelRes: VercelResponse) {
-  const req = adaptReq(vercelReq);
-  const res = adaptRes(vercelRes);
+export default function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method === "GET") {
+    const telegramUserId = String(req.query.telegramUserId ?? "");
+    if (!telegramUserId) {
+      return res.status(400).json({ message: "telegramUserId is required" });
+    }
+    return res.status(200).json(tripStore.listByUser(telegramUserId));
+  }
 
-  if (vercelReq.method === "GET") {
-    return listTrips(req, res);
+  if (req.method === "POST") {
+    const { telegramUserId, destination, startDate, endDate, peopleCount, tripType } = req.body as {
+      telegramUserId: string;
+    } & TripInput;
+
+    if (!telegramUserId || !destination || !startDate || !endDate || !tripType) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const trip = tripStore.create(telegramUserId, {
+      destination,
+      startDate,
+      endDate,
+      peopleCount: Number(peopleCount) || 1,
+      tripType
+    });
+
+    return res.status(201).json(trip);
   }
-  if (vercelReq.method === "POST") {
-    return createTrip(req, res);
-  }
+
   return res.status(405).json({ message: "Method not allowed" });
 }
