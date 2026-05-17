@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": "backend/**"
-    }
-  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index" },
     { "source": "/health", "destination": "/api/index" },
