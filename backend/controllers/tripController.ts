@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { tripStore } from "../models/tripStore";
-import { generatePackingItems } from "../services/aiService";
 import { getWeatherHint } from "../services/weatherService";
 import { TripInput } from "../types";
 
@@ -39,6 +38,7 @@ export async function generateTripList(req: Request, res: Response) {
   }
 
   const weather = await getWeatherHint(trip.destination);
+  const { generatePackingItems } = await import("../services/aiService");
   const aiItems = await generatePackingItems(trip);
   const hasWeatherItem = aiItems.some((item) => item.name.includes("курт"));
   if (!hasWeatherItem) {
