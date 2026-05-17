@@ -1,4 +1,15 @@
-import type { PackingCategory, PackingItem, Trip } from "./types";
+type PackingCategory = "clothes" | "electronics" | "documents" | "hygiene" | "other";
+
+interface PackingItem {
+  id: string;
+  name: string;
+  category: PackingCategory;
+  packed: boolean;
+}
+
+interface Trip {
+  destination: string;
+}
 
 const fallbackItems: Array<{ name: string; category: PackingCategory }> = [
   { name: "Паспорт", category: "documents" },

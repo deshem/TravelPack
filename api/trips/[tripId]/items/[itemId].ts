@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { tripStore } from "../../../lib/globalTripStore";
+import { getById, save } from "../../../lib/globalTripStore";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "PATCH") {
@@ -8,7 +8,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
   const tripId = String(req.query.tripId ?? "");
   const itemId = String(req.query.itemId ?? "");
-  const trip = tripStore.getById(tripId);
+  const trip = getById(tripId);
   if (!trip) {
     return res.status(404).json({ message: "Trip not found" });
   }
@@ -19,6 +19,6 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   item.packed = Boolean(req.body?.packed);
-  tripStore.save(trip);
+  save(trip);
   return res.status(200).json(trip);
 }
