@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { tripStore } from "../../backend/models/tripStore";
-import type { TripInput } from "../../backend/types";
+import { tripStore } from "../lib/tripStore";
+import type { TripInput } from "../lib/types";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "GET") {
