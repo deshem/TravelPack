@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { generatePackingItems, weatherHint } from "../../lib/packing";
-import { tripStore } from "../../lib/tripStore";
+import { tripStore } from "../../lib/globalTripStore";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {

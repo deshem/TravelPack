@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { tripStore } from "../../../lib/tripStore";
+import { tripStore } from "../../../lib/globalTripStore";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "PATCH") {
