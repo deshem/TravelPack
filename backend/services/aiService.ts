@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { PackingCategory, PackingItem, Trip } from "../../src/types";
+import { PackingCategory, PackingItem, Trip } from "../types";
 
 function getOpenAIClient() {
   if (!process.env.OPENAI_API_KEY) {

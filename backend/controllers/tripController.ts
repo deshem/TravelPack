@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { tripStore } from "../models/tripStore";
 import { generatePackingItems } from "../services/aiService";
 import { getWeatherHint } from "../services/weatherService";
-import { TripInput } from "../../src/types";
+import { TripInput } from "../types";
 
 export function listTrips(req: Request, res: Response) {
   const telegramUserId = String(req.query.telegramUserId ?? "");

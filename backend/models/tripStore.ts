@@ -1,4 +1,4 @@
-import { Trip, TripInput } from "../../src/types";
+import { Trip, TripInput } from "../types";
 
 const trips = new Map<string, Trip>();
 
